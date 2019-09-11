@@ -122,7 +122,9 @@ command script import /Users/guohongwei719/Desktop/GHWBinaryMapSource/script/GHW
 (lldb) gMapSource 0x106516dc2
 ```
 这样崩溃地址的编译源码文件路径和本地源码文件路径就写入到 path.txt 文件中了，继续往下运行，可以看到对应崩溃源码位置，打上断点。    
+
 5. 在进入崩溃二进制 Pod 之前打断点，重新运行项目，运行到断点位置，执行我们的自定义命令 gMapSource，此时不带参数，这样会自动读取 path.txt 中上一步写入的路径信息，将编译路径和本地源码路径进行映射。  
+
 6. 继续往下执行，不出意外就可以看到运行到崩溃位置之前断点位置，此时此刻就可以进行单步调试了。如下图
 
 ![](resources/4.png)
