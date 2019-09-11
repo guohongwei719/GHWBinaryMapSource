@@ -90,7 +90,7 @@ def gMapSource(debugger, command, result, internal_dict):
         # 通过 settings set target.source-map 命令执行编译源码位置与当前源码位置的映射
         interpreter.HandleCommand('settings set target.source-map ' + filePath + ' ' + sourcePath, returnObject)
 
-# 添加一个 扩展命令。mapSource
-# 在 lldb 输入 mapSource 0x10803839 时，会执行 lldb_MapFile.py 文件的 mapSource 方法
+# 添加一个 扩展命令 gMapSource
+# 在 lldb 输入 mapSource 0x10803839 时，会执行 GHWBinaryMapSource.py 文件的 mapSource 方法
 def __lldb_init_module(debugger, internal_dict):
     debugger.HandleCommand('command script add gMapSource -f GHWBinaryMapSource.gMapSource')

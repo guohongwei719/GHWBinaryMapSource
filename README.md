@@ -78,7 +78,50 @@ output = returnObject.GetOutput();
 print('output: ' + output)
 ```
 
+既然 Python 能帮我们执行这些 LLDB 命令，解决我们需求，那么如何自定义一个 LLDB 命令，在控制台输入的时候能够自动执行一个 Python 文件里面代码呢？
+
+LLDB 有一个非常好用的函数叫 lldb_init_module。一旦 Python 模块被加载到 LLDB 中时它就会被调用。这意味着你可以在这个函数里面把你的自定义命令安装到 LLDB 里面去，我这里 Python 文件名是 GHWBinaryMapSource，命令叫 gMapSource。
+
+Python 文件中的 _lldb_init_module 函数如下
+
+```
+def __lldb_init_module(debugger, internal_dict):
+    debugger.HandleCommand('command script add gMapSource -f GHWBinaryMapSource.gMapSource')
+```
+
+这样就添加了一个扩展命令 gMapSource，在 lldb 控制台输入 GMapSource 0x1010d7dc2 时，会执行 GHWBinaryMapSource.py 文件的 gMapSource 方法。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 ## 后记
+
+欢迎提一起探讨技术问题，觉得可以给我点个 star，谢谢。  
+微博：[黑化肥发灰11](https://weibo.com/u/2977255324)   
+简书地址：[https://www.jianshu.com/u/fb5591dbd1bf](https://www.jianshu.com/u/fb5591dbd1bf)  
+掘金地址：[https://juejin.im/user/595b50896fb9a06ba82d14d4](https://juejin.im/user/595b50896fb9a06ba82d14d4)
+
+
