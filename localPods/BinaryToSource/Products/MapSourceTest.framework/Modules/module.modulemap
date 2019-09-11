@@ -1,0 +1,6 @@
+framework module MapSourceTest {
+  umbrella header "MapSourceTest.h"
+
+  export *
+  module * { export * }
+}

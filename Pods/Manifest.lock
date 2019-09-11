@@ -1,0 +1,16 @@
+PODS:
+  - BinaryToSource (0.1.0)
+
+DEPENDENCIES:
+  - BinaryToSource (from `localPods/BinaryToSource/`)
+
+EXTERNAL SOURCES:
+  BinaryToSource:
+    :path: localPods/BinaryToSource/
+
+SPEC CHECKSUMS:
+  BinaryToSource: 5c826a8df599c35001041f3788f0708f6c938609
+
+PODFILE CHECKSUM: 26b90ca41e1898b52b0920bb79867ace3cc54491
+
+COCOAPODS: 1.7.2
