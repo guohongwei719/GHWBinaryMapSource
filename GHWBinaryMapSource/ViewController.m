@@ -45,19 +45,7 @@
     NSLog(@"ok");
 }
 
-#pragma mark - Observer
 
-#pragma mark - Notification
-
-#pragma mark - Event Response
-
-#pragma mark - Override Methods
-
-#pragma mark - Delegate
-
-#pragma mark - Public Methods
-
-#pragma mark - Private Methods
 
 #pragma mark - Setter / Getter
 - (UIButton *)tapButton {
