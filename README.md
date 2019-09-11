@@ -9,7 +9,7 @@
 
 ## 基本原理
 
-二进制 Pod 里面保存有编译时的文件路径，断点调试其实就是根据这个文件路径来找到对应源码的，可以通过 LLDB 命令找到这个编译时的源码文件路径，找到对应的文件名字和对应的组件，如果本地没有对应组件就从仓库下载下来，然后找到本地的对应源码文件路径。下次在断点之前使用 LLDB 命令将编译时的路径替换为本地源码路径就好，然后进入下一步就可以单步调试了。
+二进制 Pod 里面保存有编译时的文件路径，断点调试其实就是根据这个文件路径来找到对应源码的，可以通过 LLDB 命令找到这个编译时的源码文件路径，找到对应的文件名字和对应的组件，如果本地没有对应组件就从仓库下载下来，然后找到本地的对应源码文件路径，demo 中我是直接将源码文件放到 GHWBinaryMapSource/localPods/BinaryToSource 下面。编译路径和本地源码路径获取到以后保存到本地的 path.txt 文件中，下次在断点之前从 path.txt 文件中读出这两个路径，使用 LLDB 命令将编译时的路径替换为本地源码路径就好，然后进入下一步就可以单步调试了。
 
 ## 技术实现
 ### 一. LLDB 命令
@@ -80,7 +80,7 @@ print('output: ' + output)
 
 既然 Python 能帮我们执行这些 LLDB 命令，解决我们需求，那么如何自定义一个 LLDB 命令，在控制台输入的时候能够自动执行一个 Python 文件里面代码呢？
 
-LLDB 有一个非常好用的函数叫 lldb_init_module。一旦 Python 模块被加载到 LLDB 中时它就会被调用。这意味着你可以在这个函数里面把你的自定义命令安装到 LLDB 里面去，我这里 Python 文件名是 GHWBinaryMapSource，命令叫 gMapSource。
+LLDB 有一个非常好用的函数叫 lldb_init_module。一旦 Python 模块被加载到 LLDB 中时它就会被调用。这意味着你可以在这个函数里面把你的自定义命令安装到 LLDB 里面去，我这里 Python 文件名是 GHWBinaryMapSource.py，命令叫 gMapSource。
 
 Python 文件中的 _lldb_init_module 函数如下
 
@@ -91,30 +91,41 @@ def __lldb_init_module(debugger, internal_dict):
 
 这样就添加了一个扩展命令 gMapSource，在 lldb 控制台输入 GMapSource 0x1010d7dc2 时，会执行 GHWBinaryMapSource.py 文件的 gMapSource 方法。
 
+Python 文件准备好了，如何更方便的加载到 LLDB 中呢，也就是说如何更快导入进来，以后每次打开 Xcode 都可以用这个命令呢。
+
+在你的 home 目录下可以找到这个文件 .lldbinit，如下图
+
+![](resources/1.png)
+
+在 .lldbinit 文件中添加如下代码， import 我们的脚本代码，当然要修改为你自己的路径。
+
+```
+command script import /Users/guohongwei719/Desktop/GHWBinaryMapSource/script/GHWBinaryMapSource.py
+```
+
+以后每次启动都会 LLDB 都可以使用这个命令了。
 
 
+### 实际操作流程
 
+1. 去修改 ~/.lldbinit 文件，添加 GHWBinaryMapSource.py，注意路径改为自己本地路径
 
+2. 修改 GHWBinaryMapSource.py 文件，将代码中的 /Users/guohongwei719/Desktop/GHWBinaryMapSource/script/path.txt 替换为你自己的路径，/Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/BinaryToSource 也要替换为你自己的路径。
 
+3. 运行demo，配置好 Breakpoint，如下图，不然崩溃以后直接到 main 函数了，连崩溃的汇编代码都看不到  
+![](resources/2.png)
 
+4. 点击界面的蓝色按钮，不出意外的话会出现类似下面的崩溃界面
+![](resources/3.png)
+复制对应行的地址信息，到控制台敲我们自定义的命令
+```
+(lldb) gMapSource 0x106516dc2
+```
+这样崩溃地址的编译源码文件路径和本地源码文件路径就写入到 path.txt 文件中了，继续往下运行，可以看到对应崩溃源码位置，打上断点。  
+5. 在进入崩溃二进制 Pod 之前打断点，重新运行项目，运行到断点位置，执行我们的自定义命令 gMapSource，此时不带参数，这样会自动读取 path.txt 中上一步写入的路径信息，将编译路径和本地源码路径进行映射。
+6. 继续往下执行，不出意外就可以看到运行到崩溃位置之前断点位置，此时此刻就可以进行单步调试了。如下图
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![](resources/4.png)
 
 
 ## 后记
