@@ -21,13 +21,13 @@ def gMapSource(debugger, command, result, internal_dict):
         file_handler = open(savedFilePath, 'r')
         content = file_handler.readlines()
         if len(content) == 2:
-            filePath = content[0].replace('\n', '')
-            sourcePath = content[1].replace('\n', '')
+            compileFilePath = content[0].replace('\n', '')
+            localSourceFilePath = content[1].replace('\n', '')
             # filePath = '/Users/guohongwei719/Desktop/test/MapSourceTest/MapSourceTest/GHWMapSourceTest.m'
             # sourcePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/BinaryToSource/MapSourceTest/MapSourceTest/GHWMapSourceTest.m'
-            print('filePath = ' + filePath)
-            print('sourcePath = ' + sourcePath)
-            interpreter.HandleCommand('settings set target.source-map ' + filePath + ' ' + sourcePath, returnObject)
+            print('编译时文件路径 compileFilePath = ' + compileFilePath)
+            print('本地对应源码文件路径 sourcePath = ' + localSourceFilePath)
+            interpreter.HandleCommand('settings set target.source-map ' + compileFilePath + ' ' + localSourceFilePath, returnObject)
             output = returnObject.GetOutput();
             # print('output: ' + output)
             # file_handler.close()
@@ -62,14 +62,14 @@ def gMapSource(debugger, command, result, internal_dict):
 
         # 通过正则获取二进制编译时，源码的真正路径
         compileFilePath = re.match(r'(.|\n)*file = "(.*?)".*', output,re.M).group(2)
-        print('compileFilePath = ' + compileFilePath)
+        print('编译时文件路径 compileFilePath = ' + compileFilePath)
 
         # 通过真正路径获取编译源文件的文件名
         fileName = re.match(r'/.*/(.*)', compileFilePath).group(1)
-        print('fileName = ' + fileName)
+        print('文件名称 fileName = ' + fileName)
         # 通过文件名在 ~/MMAViewabilitySDK_iOS 目录（可以是任意的地址或者通过 git clone 动态下载）下查找源文件
         localSourceFilePath = os.popen('mdfind -onlyin ' + localSourcePath + ' ' + fileName).read().replace('\n','')
-        print('localSourceFilePath = ' + localSourceFilePath)
+        print('本地对应源码文件路径 localSourceFilePath = ' + localSourceFilePath)
 
         # current_path = os.getcwd()
         # print('current_path = ' + current_path)
