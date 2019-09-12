@@ -11,7 +11,7 @@ import os
 def gMapSource(debugger, command, result, internal_dict):
     print('command: ' + command)
     savedFilePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/script/path.txt'
-    localSourceFilePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/BinaryToSource'
+    localSourceFilePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/MapSourceTest'
     if command == '':
         print('没参数')
         current_path = os.getcwd()
