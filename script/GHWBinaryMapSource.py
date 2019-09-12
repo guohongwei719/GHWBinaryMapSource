@@ -11,7 +11,7 @@ import os
 def gMapSource(debugger, command, result, internal_dict):
     print('command: ' + command)
     savedFilePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/script/path.txt'
-    localSourceFilePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/MapSourceTest'
+    localSourcePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/MapSourceTest'
     if command == '':
         print('没参数')
         current_path = os.getcwd()
@@ -29,8 +29,8 @@ def gMapSource(debugger, command, result, internal_dict):
             print('sourcePath = ' + sourcePath)
             interpreter.HandleCommand('settings set target.source-map ' + filePath + ' ' + sourcePath, returnObject)
             output = returnObject.GetOutput();
-            print('output: ' + output)
-            file_handler.close()
+            # print('output: ' + output)
+            # file_handler.close()
         else:
             print('缺失路径信息')
 
@@ -46,7 +46,7 @@ def gMapSource(debugger, command, result, internal_dict):
         interpreter.HandleCommand('image lookup -v --address ' + command, returnObject)
         # 获取返回结果
         output = returnObject.GetOutput();
-        print('output: ' + output)
+        print('output: \n' + output)
 
         # 下面的代码设计思想是：
         # 1、根据{地址}查找该地址所属的{源码编译路径}+{编译文件名}
@@ -61,27 +61,27 @@ def gMapSource(debugger, command, result, internal_dict):
 
 
         # 通过正则获取二进制编译时，源码的真正路径
-        filePath = re.match(r'(.|\n)*file = "(.*?)".*', output,re.M).group(2)
-        print('filePath = ' + filePath)
+        compileFilePath = re.match(r'(.|\n)*file = "(.*?)".*', output,re.M).group(2)
+        print('compileFilePath = ' + compileFilePath)
 
         # 通过真正路径获取编译源文件的文件名
-        fileName = re.match(r'/.*/(.*)', filePath).group(1)
+        fileName = re.match(r'/.*/(.*)', compileFilePath).group(1)
         print('fileName = ' + fileName)
         # 通过文件名在 ~/MMAViewabilitySDK_iOS 目录（可以是任意的地址或者通过 git clone 动态下载）下查找源文件
-        sourcePath = os.popen('mdfind -onlyin ' + localSourceFilePath + ' ' + fileName).read().replace('\n','')
-        print('sourcePath = ' + sourcePath)
+        localSourceFilePath = os.popen('mdfind -onlyin ' + localSourcePath + ' ' + fileName).read().replace('\n','')
+        print('localSourceFilePath = ' + localSourceFilePath)
 
-        current_path = os.getcwd()
-        print('current_path = ' + current_path)
+        # current_path = os.getcwd()
+        # print('current_path = ' + current_path)
 
-        txtFilePath = os.path.join(current_path, 'path.txt')
-        print('txtFilePath = ' + txtFilePath)
+        # txtFilePath = os.path.join(current_path, 'path.txt')
+        # print('txtFilePath = ' + txtFilePath)
 
         content = []
 
-        content.append(filePath)
+        content.append(compileFilePath)
         content.append('\n')
-        content.append(sourcePath)
+        content.append(localSourceFilePath)
 
         out = open(savedFilePath, 'w')
         out.writelines(content)
@@ -89,7 +89,7 @@ def gMapSource(debugger, command, result, internal_dict):
 
 
         # 通过 settings set target.source-map 命令执行编译源码位置与当前源码位置的映射
-        interpreter.HandleCommand('settings set target.source-map ' + filePath + ' ' + sourcePath, returnObject)
+        interpreter.HandleCommand('settings set target.source-map ' + compileFilePath + ' ' + localSourceFilePath, returnObject)
 
 # 添加一个 扩展命令 gMapSource
 # 在 lldb 输入 mapSource 0x10803839 时，会执行 GHWBinaryMapSource.py 文件的 gMapSource 方法
