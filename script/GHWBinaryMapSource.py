@@ -10,14 +10,15 @@ import os
 # command 是用户输入的符号地址
 def gMapSource(debugger, command, result, internal_dict):
     print('command: ' + command)
-
+    savedFilePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/script/path.txt'
+    localSourceFilePath = '/Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/BinaryToSource'
     if command == '':
         print('没参数')
         current_path = os.getcwd()
         print('当前所在路径：' + current_path)
         interpreter = lldb.debugger.GetCommandInterpreter()
         returnObject = lldb.SBCommandReturnObject()
-        file_handler = open('/Users/guohongwei719/Desktop/GHWBinaryMapSource/script/path.txt', 'r')
+        file_handler = open(savedFilePath, 'r')
         content = file_handler.readlines()
         if len(content) == 2:
             filePath = content[0].replace('\n', '')
@@ -67,7 +68,7 @@ def gMapSource(debugger, command, result, internal_dict):
         fileName = re.match(r'/.*/(.*)', filePath).group(1)
         print('fileName = ' + fileName)
         # 通过文件名在 ~/MMAViewabilitySDK_iOS 目录（可以是任意的地址或者通过 git clone 动态下载）下查找源文件
-        sourcePath = os.popen('mdfind -onlyin  /Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/BinaryToSource '+fileName).read().replace('\n','')
+        sourcePath = os.popen('mdfind -onlyin ' + localSourceFilePath + ' ' + fileName).read().replace('\n','')
         print('sourcePath = ' + sourcePath)
 
         current_path = os.getcwd()
@@ -82,7 +83,7 @@ def gMapSource(debugger, command, result, internal_dict):
         content.append('\n')
         content.append(sourcePath)
 
-        out = open('/Users/guohongwei719/Desktop/GHWBinaryMapSource/script/path.txt', 'w')
+        out = open(savedFilePath, 'w')
         out.writelines(content)
         out.close()
 

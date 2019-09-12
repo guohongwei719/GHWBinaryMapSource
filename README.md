@@ -1,8 +1,21 @@
 # 使用 Python 和 LLDB 解决二进制 Pod 到源码映射问题并实现单步调试
 
+### 目录
+
+[前言](https://github.com/guohongwei719/GHWBinaryMapSource#%E5%89%8D%E8%A8%80)
+[基本原理](https://github.com/guohongwei719/GHWBinaryMapSource#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86)
+[技术实现](https://github.com/guohongwei719/GHWBinaryMapSource#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0)
+&nbsp;&nbsp;&nbsp;&nbsp;[一. LLDB 命令](https://github.com/guohongwei719/GHWBinaryMapSource#%E4%B8%80-lldb-%E5%91%BD%E4%BB%A4)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[image lookup -v --address](https://github.com/guohongwei719/GHWBinaryMapSource#image-lookup--v---address)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[settings set target.source-map](https://github.com/guohongwei719/GHWBinaryMapSource#settings-set-targetsource-map)
+&nbsp;&nbsp;&nbsp;&nbsp;[二. Python 定制 LLDB 命令](https://github.com/guohongwei719/GHWBinaryMapSource#%E4%BA%8C-python-%E5%AE%9A%E5%88%B6-lldb-%E5%91%BD%E4%BB%A4)
+[实际操作流程](https://github.com/guohongwei719/GHWBinaryMapSource#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B)
+[后记](https://github.com/guohongwei719/GHWBinaryMapSource#%E5%90%8E%E8%AE%B0)
+
+
 ## 前言
 
-随着公司业务不断发展，组件化已经成为趋势，大多都是将各个组件拆分为一个个 Pod，然后通过 Podfile 集成到一起。为了加快编译速度，很多 Pod 组件都会做出二进制的形式，提前编译好，然而这样又带来一个问题就是如果二进制 Pod 中发生 crash 的话，我们得到的只能是一些看不懂的汇编代码，无法单步调试。本文的方案可以解决这个问题，实现二进制到源码的映射，同事能够实现单步调试。  
+随着公司业务不断发展，组件化已经成为趋势，大多都是将各个组件拆分为一个个 Pod，然后通过 Podfile 集成到一起。为了加快编译速度，很多 Pod 组件都会做出二进制的形式，提前编译好，然而这样又带来一个问题就是如果二进制 Pod 中发生 crash 的话，我们得到的只能是一些看不懂的汇编代码，无法单步调试。本文的方案可以解决这个问题，实现二进制到源码的映射，同时能够实现单步调试。  
 
 整个操作流程如下  
 
