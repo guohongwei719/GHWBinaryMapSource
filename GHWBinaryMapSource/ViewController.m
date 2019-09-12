@@ -50,10 +50,11 @@
 #pragma mark - Setter / Getter
 - (UIButton *)tapButton {
     if (!_tapButton) {
-        _tapButton = [[UIButton alloc] initWithFrame:CGRectMake(30, 100, 150, 50)];
+        _tapButton = [[UIButton alloc] initWithFrame:CGRectMake(30, 100, 250, 50)];
         [_tapButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         _tapButton.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_tapButton setTitle:@"二进制映射源码测试" forState:UIControlStateNormal];
+        _tapButton.backgroundColor = [UIColor lightGrayColor];
+        [_tapButton setTitle:@"二进制映射源码测试(点我会 crash 哦)" forState:UIControlStateNormal];
          [_tapButton addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
      }
     return _tapButton;
