@@ -19,7 +19,7 @@
 
 整个操作流程如下  
 
-![](resources/1.gif)
+![](resources/5.gif)
 
 美团有一篇文章也是讲二进制 Pod 调试的，[美团 iOS 工程 zsource 命令背后的那些事儿](https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651750501&idx=2&sn=6af75f39a08bc26b0b67acc266adfa59&chksm=bd1259288a65d03ebc028367739f1c14643045a3b1c28699b641126659ebbad250d886a54385&scene=21#wechat_redirect)  
 相比而言本方案有几个优点如下：  
