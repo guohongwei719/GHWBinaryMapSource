@@ -1,4 +1,4 @@
-# 使用 Python 和 LLDB 解决二进制 Pod 到源码映射问题
+# 使用 Python 和 LLDB 解决二进制 Pod 到源码映射问题并实现单步调试
 
 ## 前言
 
