@@ -2,8 +2,8 @@
 //  ViewController.m
 //  GHWBinaryMapSource
 //
-//  Created by 郭宏伟 on 2019/9/11.
-//  Copyright © 2019 Jingyao. All rights reserved.
+//  Created by 黑化肥发灰 on 2019/9/11.
+//  Copyright © 2019 黑化肥发灰. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -37,7 +37,7 @@
 - (void)configData {
 
 }
-
+  
 - (void)buttonTap:(id)sender {
     GHWMapSourceTest *test = [[GHWMapSourceTest alloc] init];
     [test testFail];
