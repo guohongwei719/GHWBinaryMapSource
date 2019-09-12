@@ -89,7 +89,7 @@ def __lldb_init_module(debugger, internal_dict):
     debugger.HandleCommand('command script add gMapSource -f GHWBinaryMapSource.gMapSource')
 ```
 
-这样就添加了一个扩展命令 gMapSource，在 lldb 控制台输入 GMapSource 0x1010d7dc2 时，会执行 GHWBinaryMapSource.py 文件的 gMapSource 方法。
+这样就添加了一个扩展命令 gMapSource，在 lldb 控制台输入 gMapSource 0x1010d7dc2 时，会执行 GHWBinaryMapSource.py 文件的 gMapSource 方法。
 
 Python 文件准备好了，如何更方便的加载到 LLDB 中呢，也就是说如何更快导入进来，以后每次打开 Xcode 都可以用这个命令呢。
 
