@@ -1,2 +1,2 @@
-/Users/guohongwei719/Desktop/MapSourceTest/MapSourceTest/GHWMapSourceTest.m
+/Users/guohongwei719/Desktop/test/MapSourceTest/MapSourceTest/GHWMapSourceTest.m
 /Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/MapSourceTest/MapSourceTest/GHWMapSourceTest.m
