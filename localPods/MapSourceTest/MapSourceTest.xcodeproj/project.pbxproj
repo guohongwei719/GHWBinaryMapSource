@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EDB7662923124ED500E77251 /* MapSourceTest.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB7662723124ED500E77251 /* MapSourceTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EDB7663123124EEE00E77251 /* GHWMapSourceTest.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB7662F23124EEE00E77251 /* GHWMapSourceTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED5E1AEC232A7CCF00283CC4 /* GHWMapSourceTest.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB7662F23124EEE00E77251 /* GHWMapSourceTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDB7663323124FA700E77251 /* GHWMapSourceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB7663023124EEE00E77251 /* GHWMapSourceTest.m */; };
+		EDDECC21232A7ACF005E570D /* MapSourceTest.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB7662723124ED500E77251 /* MapSourceTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,8 +65,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDB7662923124ED500E77251 /* MapSourceTest.h in Headers */,
-				EDB7663123124EEE00E77251 /* GHWMapSourceTest.h in Headers */,
+				EDDECC21232A7ACF005E570D /* MapSourceTest.h in Headers */,
+				ED5E1AEC232A7CCF00283CC4 /* GHWMapSourceTest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
