@@ -131,7 +131,7 @@ command script import /Users/guohongwei719/Desktop/GHWBinaryMapSource/script/GHW
 
 ### 实际操作流程
 
-1. 去修改 ~/.lldbinit 文件，添加 GHWBinaryMapSource.py，注意路径改为自己本地路径
+1. demo clone 下来，去修改 ~/.lldbinit 文件，添加 GHWBinaryMapSource.py，注意路径改为自己本地路径
 
 2. 修改 GHWBinaryMapSource.py 文件，将代码中的 /Users/guohongwei719/Desktop/GHWBinaryMapSource/script/path.txt 替换为你自己的路径，/Users/guohongwei719/Desktop/GHWBinaryMapSource/localPods/BinaryToSource 也要替换为你自己的路径。
 
